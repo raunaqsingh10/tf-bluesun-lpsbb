@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useState } from 'react';
 import { mergeParamsIntoCalLink } from '../lib/attribution';
 

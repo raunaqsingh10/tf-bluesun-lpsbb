@@ -1,6 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-'use client';
-
 import { useEffect, useState } from 'react';
 import { BookingEmbed } from './components/BookingEmbed';
 import { LazyVideoCard } from './components/LazyVideoCard';
