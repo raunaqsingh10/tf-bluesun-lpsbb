@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-
 import type { ReactNode } from 'react';
 
 type ThankYouVariant = 'qualified' | 'not-qualified';

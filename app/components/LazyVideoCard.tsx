@@ -1,6 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-'use client';
-
 import { useState } from 'react';
 
 type LazyVideoCardProps = {
