@@ -706,6 +706,13 @@ summary:focus-visible {
   font-size: 12px;
 }
 
+.video-quote {
+  margin: 10px 0 0;
+  color: #3d3c38;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
 .offer-grid {
   display: grid;
   gap: 14px;

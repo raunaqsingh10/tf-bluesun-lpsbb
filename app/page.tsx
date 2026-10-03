@@ -306,81 +306,103 @@ export default function Home() {
             ) : (
               <CalendarPlaceholder />
             )}
+
+            <div className="proof-intro">
+              <p>Appointments booked directly into a client&apos;s calendar.</p>
+            </div>
+
+            <div className="quote-block quote-muted">
+              “I&apos;ve bought leads before from companies, and I&apos;ve had other people do lead generation for me with Facebook ads, and they were terrible leads. <strong>I definitely think we&apos;ve got a goldmine.</strong>”
+            </div>
+
+            <div className="proof-intro">
+              <p>
+                Keith Nickel
+                <br />
+                FOMA AI · California
+              </p>
+            </div>
           </div>
         </section>
 
         <section className="section">
           <div className="shell text-section-inner">
             <h2>
-              <span className="headline-part">You don&apos;t need more leads.</span>
-              <span className="headline-part">You need the right US buyers in conversation with your team, consistently.</span>
+              <span className="headline-part">The hard part isn&apos;t finding US companies.</span>
+              <span className="headline-part">It&apos;s getting the right ones into sales conversations, consistently.</span>
             </h2>
-            <p className="body-copy">More names, contact lists and low-intent leads don&apos;t create pipeline.</p>
-            <p className="body-copy">
-              What matters is consistently getting the <strong>right US decision-makers into real sales conversations</strong>, without relying on referrals, doing the prospecting yourself, or building an outbound team from scratch.
-            </p>
-            <p className="strong-line">So your team can spend less time searching for opportunities...</p>
-            <p className="strong-line compact">and more time having the sales conversations that can actually grow the business.</p>
+            <p className="body-copy">Referrals are unpredictable.</p>
+            <p className="body-copy">Doing the prospecting yourself takes time away from selling and running the business.</p>
+            <p className="body-copy">Building an outbound team means hiring, training and managing people before you know the system works.</p>
+            <p className="body-copy">And most outsourced outbound still leaves you with more names, more messages and more low-intent conversations.</p>
+            <p className="strong-line"><strong>You should be taking qualified sales calls, not spending your time running outbound.</strong></p>
           </div>
         </section>
 
         <section className="section white">
           <div className="shell text-section-inner">
-            <h2>Most outbound starts with the wrong question.</h2>
+            <h2>Most outreach asks the wrong question.</h2>
             <p className="body-copy">It asks:</p>
-            <div className="quote-block quote-muted">“Who could buy what we sell?”</div>
-            <p className="body-copy">
-              So teams build large prospect lists, send more emails, add more LinkedIn messages and hope the right person responds at the right time.
-            </p>
-            <p className="body-copy">A company can look like the perfect fit and still have no real need for what you sell right now.</p>
+            <div className="quote-block quote-muted"><strong>“Who fits our ICP?”</strong></div>
+            <p className="body-copy">So teams build large lists of companies that look right on paper, then send emails and LinkedIn messages hoping some of them actually need what they sell.</p>
+            <p className="body-copy">But matching your ICP doesn&apos;t mean the problem is active or that the company is trying to solve it.</p>
             <p className="body-copy">The better question is:</p>
-            <div className="quote-block quote-featured">“Who fits our ICP and is showing signs they may actually need what we sell right now?”</div>
-            <p className="strong-line">That is where better sales conversations begin.</p>
+            <div className="quote-block quote-featured"><strong>“Who fits our ICP and is already showing signs they are trying to solve the problem we solve?”</strong></div>
+            <p className="strong-line"><strong>That is where better sales conversations begin.</strong></p>
           </div>
         </section>
 
         <section className="section soft-blue">
           <div className="shell mechanism-wrap">
             <div className="mechanism-intro">
-              <p className="overline blue">The Blue Sun Difference</p>
+              <p className="overline blue">THE BLUE SUN DIFFERENCE</p>
               <h2>
                 <span className="headline-part">We don&apos;t just target companies that fit your ICP.</span>
                 <span className="headline-part">We target companies already trying to solve the problem your service solves.</span>
               </h2>
-              <p className="contrast-line">
-                Most outbound starts with a list. <strong>Blue Sun starts with evidence.</strong>
-              </p>
+              <p className="contrast-line">Then we build and run the system that turns those signals into qualified sales calls.</p>
             </div>
 
             <div className="steps">
               <div className="step">
                 <div className="step-num">01</div>
                 <div>
-                  <h3>Find the companies with active pain</h3>
-                  <p>We use <strong>200+ pain, commercial and buying signals</strong> to identify companies already trying to solve the problem your service solves.</p>
-                  <p className="step-follow-up">Then we find the decision-maker responsible for solving it.</p>
+                  <h3>Find companies with an active reason to talk</h3>
+                  <p>We track <strong>200+ pain, commercial and buying signals</strong> such as hiring activity, expansion, funding, leadership changes and other market activity that can show the problem you solve is active.</p>
+                  <p className="step-follow-up">Then we identify the decision-maker responsible for solving it.</p>
                 </div>
               </div>
 
               <div className="step">
                 <div className="step-num">02</div>
                 <div>
-                  <h3>Reach the right person with the right message</h3>
-                  <p>Depending on your market, we use SMS, email, voicemail and LinkedIn to reach the decision-maker with messaging built around the signals we found.</p>
+                  <h3>Reach them through your business</h3>
+                  <p>We build the messaging around the signals we found and reach prospects through the channels that make sense for your market, including SMS, email, LinkedIn and voicemail.</p>
+                  <p className="step-follow-up">The outreach comes from your business, using messaging approved by you, so prospects experience it as a direct conversation with your company.</p>
                 </div>
               </div>
 
               <div className="step">
                 <div className="step-num">03</div>
                 <div>
-                  <h3>Turn interest into qualified sales calls</h3>
-                  <p>When a prospect responds, the system already knows the company, the decision-maker and the conversation context.</p>
-                  <p className="step-follow-up">AI-assisted follow-up qualifies the opportunity and books the right prospects directly into your calendar.</p>
+                  <h3>Qualify the conversation before it reaches you</h3>
+                  <p>When someone responds, we work the conversation against the qualification criteria agreed at onboarding.</p>
+                  <p className="step-follow-up">We look for the right company, the right decision-maker and a genuine reason to discuss your offer.</p>
+                  <p className="step-follow-up"><strong>If the opportunity does not qualify, it does not reach your calendar and does not count towards the 100.</strong></p>
+                </div>
+              </div>
+
+              <div className="step">
+                <div className="step-num">04</div>
+                <div>
+                  <h3>Keep the opportunity moving</h3>
+                  <p>We handle the follow-up, reminders and booking workflow required to move qualified prospects from first response to scheduled conversation.</p>
+                  <p className="step-follow-up">So opportunities do not disappear simply because someone failed to follow up at the right time.</p>
                 </div>
               </div>
             </div>
 
-            <div className="mechanism-result">So your team gets fewer random conversations and more qualified calls with decision-makers who have a real reason to listen.</div>
+            <div className="mechanism-result"><strong>Your team does not have to build, manage or babysit the outbound system. You focus on taking qualified sales calls and closing the right clients.</strong></div>
           </div>
         </section>
 
@@ -416,9 +438,24 @@ export default function Home() {
             <p className="body-copy">Real feedback from clients on lead quality, execution and working with the team.</p>
 
             <div className="video-strip" aria-label="Client video testimonials">
-              <LazyVideoCard name="Keith" {...testimonialMedia.keith} />
-              <LazyVideoCard name="Dex" {...testimonialMedia.dex} />
-              <LazyVideoCard name="Dev Staff / strongest alternate" {...testimonialMedia.devStaff} />
+              <LazyVideoCard
+                name="Keith Nickel"
+                descriptor="FOMA AI · California"
+                quote="“The leads are fantastic.”"
+                {...testimonialMedia.keith}
+              />
+              <LazyVideoCard
+                name="Dex"
+                descriptor="Founder & CEO, Voldy AI"
+                quote="“I definitely could not have started this journey without them.”"
+                {...testimonialMedia.dex}
+              />
+              <LazyVideoCard
+                name="Lopes Capital"
+                descriptor="Family Office · Scottsdale"
+                quote="“We spoke to upwards of 30 daycares in a short period of time... the results really speak for themselves.”"
+                {...testimonialMedia.devStaff}
+              />
             </div>
           </div>
         </section>

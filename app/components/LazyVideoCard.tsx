@@ -2,11 +2,13 @@ import { useState } from 'react';
 
 type LazyVideoCardProps = {
   name: string;
+  descriptor: string;
+  quote: string;
   src?: string;
   poster?: string;
 };
 
-export function LazyVideoCard({ name, src, poster }: LazyVideoCardProps) {
+export function LazyVideoCard({ name, descriptor, quote, src, poster }: LazyVideoCardProps) {
   const [isActive, setIsActive] = useState(false);
   const [hasError, setHasError] = useState(false);
 
@@ -48,7 +50,8 @@ export function LazyVideoCard({ name, src, poster }: LazyVideoCardProps) {
       </div>
       <div className="video-copy">
         <strong>{name}</strong>
-        <span>Video testimonial</span>
+        <span>{descriptor}</span>
+        <p className="video-quote">{quote}</p>
       </div>
     </article>
   );
