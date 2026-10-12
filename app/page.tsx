@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { BookingEmbed } from './components/BookingEmbed';
 import { LazyVideoCard } from './components/LazyVideoCard';
 import {
@@ -130,6 +130,45 @@ const testimonialMedia = {
   },
 } satisfies Record<string, { src?: string; poster?: string }>;
 
+const clientResults = [
+  {
+    company: 'INFINITE CONSULTING',
+    logo: { src: '/media/client-logos/infinite-consulting.png', width: 742, height: 386, variant: 'infinite' },
+    descriptor: 'California-based consulting firm',
+    number: '110',
+    result: 'qualified sales calls',
+    timeframe: 'In 60 days',
+    secondary: '20 clients closed · $40K/month in revenue',
+  },
+  {
+    company: 'PERIGON CAPITAL',
+    logo: { src: '/media/client-logos/perigon-capital.jpeg', width: 400, height: 400, variant: 'perigon' },
+    descriptor: 'Boutique investment bank',
+    number: '90',
+    result: 'off-market introductions',
+    timeframe: 'In 60 days',
+    secondary: '9 signed mandates · $300K net revenue',
+  },
+  {
+    company: 'FOMA AI',
+    logo: { src: '/media/client-logos/foma-ai.png', width: 200, height: 200, variant: 'foma' },
+    descriptor: 'Beverly Hills-based AI agency',
+    number: '220',
+    result: 'qualified sales calls',
+    timeframe: 'In 100 days',
+    secondary: '20 clients closed · $40K/month in revenue',
+  },
+  {
+    company: 'LOPES CAPITAL',
+    logo: { src: '/media/client-logos/lopes-capital.png', width: 480, height: 266, variant: 'lopes' },
+    descriptor: 'Private equity practice',
+    number: '410',
+    result: 'off-market introductions',
+    timeframe: 'In 180 days',
+    secondary: '49 LOIs issued · 8 signed',
+  },
+];
+
 function ProofPlaceholder({ compact = false, pattern }: { compact?: boolean; pattern: string[] }) {
   return (
     <div
@@ -223,6 +262,119 @@ function CalendarPlaceholder() {
         </div>
       </div>
     </div>
+  );
+}
+
+function SwipeGallery({
+  id,
+  label,
+  variant,
+  slides,
+}: {
+  id: string;
+  label: string;
+  variant: 'results' | 'screenshots';
+  slides: { label: string; content: ReactNode }[];
+}) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [positions, setPositions] = useState([0]);
+  const [activePage, setActivePage] = useState(0);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    let pagePositions = [0];
+    const updateActivePage = () => {
+      const nearestPage = pagePositions.reduce((nearest, position, index) => (
+        Math.abs(position - track.scrollLeft) < Math.abs(pagePositions[nearest] - track.scrollLeft)
+          ? index
+          : nearest
+      ), 0);
+      setActivePage(nearestPage);
+    };
+    const measure = () => {
+      const firstSlide = track.firstElementChild as HTMLElement | null;
+      const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+      pagePositions = Array.from(track.children).reduce<number[]>((pages, child) => {
+        const offset = (child as HTMLElement).offsetLeft - (firstSlide?.offsetLeft ?? 0);
+        const position = Math.min(offset, maxScroll);
+        if (!pages.length || position - pages[pages.length - 1] > 1) pages.push(position);
+        return pages;
+      }, []);
+      setPositions(pagePositions);
+      updateActivePage();
+    };
+
+    const observer = new ResizeObserver(measure);
+    observer.observe(track);
+    measure();
+    track.addEventListener('scroll', updateActivePage, { passive: true });
+    return () => {
+      observer.disconnect();
+      track.removeEventListener('scroll', updateActivePage);
+    };
+  }, [slides.length]);
+
+  const goToPage = (index: number) => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    trackRef.current?.scrollTo({ left: positions[index], behavior: reduceMotion ? 'instant' : 'smooth' });
+  };
+
+  return (
+    <div className={`swipe-gallery swipe-gallery--${variant}`} role="region" aria-roledescription="carousel" aria-label={label}>
+      <div
+        className="swipe-gallery-track"
+        id={id}
+        ref={trackRef}
+        tabIndex={0}
+        role="group"
+        aria-label={`${label} slides`}
+        onKeyDown={(event) => {
+          if (event.target !== event.currentTarget) return;
+          const targetPages: Partial<Record<string, number>> = {
+            ArrowLeft: Math.max(0, activePage - 1),
+            ArrowRight: Math.min(positions.length - 1, activePage + 1),
+            Home: 0,
+            End: positions.length - 1,
+          };
+          const targetPage = targetPages[event.key];
+          if (targetPage === undefined) return;
+          event.preventDefault();
+          goToPage(targetPage);
+        }}
+      >
+        {slides.map((slide, index) => (
+          <div className="swipe-gallery-slide" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${slides.length}: ${slide.label}`} key={slide.label}>
+            {slide.content}
+          </div>
+        ))}
+      </div>
+      <div className="gallery-pagination" role="group" aria-label={`${label} pagination`}>
+        {positions.map((position, index) => (
+          <button
+            className="gallery-page"
+            type="button"
+            aria-label={`Go to ${label.toLowerCase()} page ${index + 1}`}
+            aria-controls={id}
+            aria-current={index === activePage ? 'true' : undefined}
+            onClick={() => goToPage(index)}
+            key={position}
+          >
+            <span aria-hidden="true" />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function CampaignResponse({ asset, label }: { asset: ImageAsset; label: string }) {
+  return (
+    <figure className="campaign-response">
+      <figcaption className="proof-meta"><span>{label}</span><span>{asset.channel}</span></figcaption>
+      <img className="proof-image" src={asset.src} alt={asset.alt} width={asset.width} height={asset.height} loading="lazy" decoding="async" />
+    </figure>
   );
 }
 
@@ -408,20 +560,82 @@ export default function Home() {
 
         <section className="section white">
           <div className="shell">
+            <div className="client-results-head">
+              <p className="overline blue">REAL CLIENT RESULTS</p>
+              <h2>What our outbound systems have delivered for clients.</h2>
+              <p className="body-copy">A few examples across consulting, AI and financial services.</p>
+            </div>
+
+            <SwipeGallery
+              id="client-results-gallery"
+              label="Client results"
+              variant="results"
+              slides={clientResults.map((client) => ({
+                label: client.company,
+                content: (
+                  <article className="client-result-card">
+                    <div className="result-main">
+                      <div className="result-identity">
+                        <div className="result-logo-slot">
+                          {client.logo ? (
+                            <img
+                              className={`result-logo result-logo--${client.logo.variant}`}
+                              src={client.logo.src}
+                              alt={`${client.company} logo`}
+                              width={client.logo.width}
+                              height={client.logo.height}
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          ) : null}
+                        </div>
+                        <p className="result-company">{client.company}</p>
+                        <p className="result-descriptor">{client.descriptor}</p>
+                      </div>
+                      <h3 className="result-primary"><span className="result-number">{client.number}</span>{' '}<span className="result-label">{client.result}</span></h3>
+                      <p className="result-timeframe">{client.timeframe}</p>
+                    </div>
+                    <p className="result-secondary">{client.secondary}</p>
+                  </article>
+                ),
+              }))}
+            />
+
             <div className="campaign-proof-head">
               <p className="overline blue">Real Campaign Proof</p>
               <h2>Reach companies showing the right signals, and the conversation changes.</h2>
               <p className="body-copy">These are real responses from prospects reached through client campaigns across SMS and LinkedIn.</p>
             </div>
 
-            <div className="campaign-proof-gallery" aria-label="Six campaign response screenshots">
-              <ProofCard compact label="Response 01" channel="LinkedIn" placement="01" pattern={['', 'mid', 'short']} asset={mediaManifest.response01} />
-              <ProofCard compact label="Response 02" channel="SMS" placement="02" pattern={['mid', '', 'short']} asset={mediaManifest.response02} />
-              <ProofCard compact label="Response 03" channel="LinkedIn" placement="03" pattern={['', 'bluebar', 'mid']} asset={mediaManifest.response03} />
-              <ProofCard compact label="Response 04" channel="SMS" placement="04" pattern={['short', '', 'mid']} asset={mediaManifest.response04} />
-              <ProofCard compact label="Response 05" channel="SMS" placement="05" pattern={['mid', 'short', '']} asset={mediaManifest.response05} />
-              <ProofCard compact label="Response 06" channel="LinkedIn" placement="06" pattern={['', 'mid', 'bluebar']} asset={mediaManifest.response06} />
-            </div>
+            <SwipeGallery
+              id="campaign-response-gallery"
+              label="Campaign responses"
+              variant="screenshots"
+              slides={[
+                {
+                  label: 'Brett SMS response',
+                  content: <article className="campaign-proof-card"><CampaignResponse label="Response 02" asset={mediaManifest.response02} /></article>,
+                },
+                {
+                  label: 'Three LinkedIn responses',
+                  content: (
+                    <article className="campaign-proof-card campaign-proof-card--linkedin">
+                      <CampaignResponse label="Response 01" asset={mediaManifest.response01} />
+                      <CampaignResponse label="Response 03" asset={mediaManifest.response03} />
+                      <CampaignResponse label="Response 06" asset={mediaManifest.response06} />
+                    </article>
+                  ),
+                },
+                {
+                  label: 'Marc Segal SMS response',
+                  content: <article className="campaign-proof-card"><CampaignResponse label="Response 04" asset={mediaManifest.response04} /></article>,
+                },
+                {
+                  label: 'Robert Byrd SMS response',
+                  content: <article className="campaign-proof-card"><CampaignResponse label="Response 05" asset={mediaManifest.response05} /></article>,
+                },
+              ]}
+            />
 
             <div className="proof-cta">
               <a className="cta" href="#apply">
@@ -464,31 +678,12 @@ export default function Home() {
           <div className="shell">
             <p className="overline blue">The Blue Sun 90-Day US Pipeline Build</p>
             <h2>
-              <span className="headline-part">We run the outbound engine.</span>
+              <span className="headline-part">We run the outbound engine.</span>{' '}
               <span className="headline-part">Your team takes the sales calls.</span>
             </h2>
-            <p className="lead">Blue Sun owns the work required to turn your US market into a consistent flow of qualified sales conversations.</p>
-
-            <div className="offer-grid">
-              <div className="offer-box">
-                <h3>Blue Sun handles</h3>
-                <ul>
-                  <li>ICP, targeting and decision-maker research</li>
-                  <li>Prospect data and signal identification</li>
-                  <li>Messaging and campaign setup</li>
-                  <li>SMS, email, voicemail and LinkedIn outreach</li>
-                  <li>Reply handling and qualification</li>
-                  <li>Calendar booking</li>
-                  <li>Reporting and ongoing optimisation</li>
-                </ul>
-              </div>
-
-              <div className="offer-box secondary">
-                <h3>Your team stays focused on selling</h3>
-                <p className="body-copy small-copy">Your involvement is simple.</p>
-                <p className="body-copy small-copy">You give us the context we need about your offer and ideal customer, approve the messaging, keep enough calendar capacity available and take the qualified sales calls we book.</p>
-                <p className="body-copy small-copy last-copy">Then you give us regular feedback on meeting quality so we can keep improving the system.</p>
-              </div>
+            <div className="offer-copy">
+              <p className="body-copy">Blue Sun handles the prospecting, outreach, qualification, follow-up and appointment booking.</p>
+              <p className="body-copy">You give us the context about your offer, approve the messaging, take the qualified sales calls and share feedback so we can keep improving results.</p>
             </div>
 
             <div className="commitment">
@@ -496,7 +691,6 @@ export default function Home() {
               <h3><span className="blue">100 qualified US sales appointments</span> booked within 90 days.</h3>
               <p>We only take on businesses where we believe that target is achievable.</p>
               <p>If we do not book all 100 qualified appointments within the first 90 days, <strong>Blue Sun continues running your campaign at no additional management fee until the remaining appointments are delivered.</strong></p>
-              <p className="final">You take the sales calls. We own the pipeline-building work.</p>
             </div>
           </div>
         </section>
@@ -504,33 +698,29 @@ export default function Home() {
         <section className="section">
           <div className="shell">
             <p className="overline">Before You Apply</p>
-            <h2>Blue Sun is built for businesses that are ready to take US growth seriously.</h2>
+            <h2>We only take on businesses where 100 qualified US appointments can make commercial sense.</h2>
+            <p className="body-copy">That means your business should have:</p>
 
-            <div className="fit-grid">
-              <div className="fit-box">
-                <h3>You are likely a strong fit if:</h3>
-                <ul className="fit-list good">
-                  <li>Your service is already proven and selling successfully</li>
-                  <li>One new client is worth at least ₹2L</li>
-                  <li>There is a meaningful US market for what you sell</li>
-                  <li>Your team can take and follow up on qualified sales calls</li>
-                  <li>You want to build a repeatable US pipeline, not just test a few leads</li>
-                </ul>
-              </div>
+            <ul className="qualification-list">
+              <li>
+                <strong>A proven B2B service.</strong>
+                <p>Something you&apos;re already selling successfully, not an offer you&apos;re still testing.</p>
+              </li>
+              <li>
+                <strong>A client value of at least ₹2L.</strong>
+                <p>So the economics can justify investing in a managed acquisition system.</p>
+              </li>
+              <li>
+                <strong>A meaningful US market.</strong>
+                <p>Enough relevant companies and decision-makers for consistent outreach.</p>
+              </li>
+              <li>
+                <strong>The ability to turn sales calls into clients.</strong>
+                <p>A team ready to take qualified meetings, follow up and close business.</p>
+              </li>
+            </ul>
 
-              <div className="fit-box muted">
-                <h3>This is probably not the right fit if:</h3>
-                <ul className="fit-list bad">
-                  <li>You are still figuring out your offer or ideal customer</li>
-                  <li>Your client value is too low for a managed outbound system to make commercial sense</li>
-                  <li>Your US market is very small or difficult to define</li>
-                  <li>You do not currently have the capacity to handle new opportunities</li>
-                  <li>You are only exploring, looking for a free trial, or want a handful of test leads</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="body-copy">If this sounds like your business, the next step is to see whether there is a strong enough fit for Blue Sun to take on your campaign.</p>
+            <p className="qualification-note">If you&apos;re still experimenting with your offer, looking for a handful of cheap leads or unable to take new sales calls, this won&apos;t be the right engagement.</p>
             <a className="cta" href="#apply">
               See If Your Business Qualifies
             </a>
