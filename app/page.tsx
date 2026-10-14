@@ -103,38 +103,22 @@ const testimonialMedia = {
 const clientResults = [
   {
     company: 'Infinite Consulting',
-    logo: { src: '/media/client-logos/infinite-consulting.png', width: 742, height: 386, variant: 'infinite' },
-    descriptor: 'California-based consulting firm',
-    number: '110',
-    result: 'qualified sales calls',
-    timeframe: 'In 60 days',
+    statement: 'A California-based consulting firm received 110 qualified sales calls in 60 days.',
     secondary: '20 clients closed · $40K/month in revenue',
   },
   {
     company: 'Perigon Capital',
-    logo: { src: '/media/client-logos/perigon-capital.jpeg', width: 400, height: 400, variant: 'perigon' },
-    descriptor: 'Boutique investment bank',
-    number: '90',
-    result: 'off-market introductions',
-    timeframe: 'In 60 days',
+    statement: 'A boutique investment bank received 90 off-market introductions in 60 days.',
     secondary: '9 signed mandates · $300K net revenue',
   },
   {
     company: 'FOMA AI',
-    logo: { src: '/media/client-logos/foma-ai.png', width: 200, height: 200, variant: 'foma' },
-    descriptor: 'Beverly Hills-based AI agency',
-    number: '220',
-    result: 'qualified sales calls',
-    timeframe: 'In 100 days',
+    statement: 'A Beverly Hills-based AI agency received 220 qualified sales calls in 100 days.',
     secondary: '20 clients closed · $40K/month in revenue',
   },
   {
     company: 'Lopes Capital',
-    logo: { src: '/media/client-logos/lopes-capital.png', width: 480, height: 266, variant: 'lopes' },
-    descriptor: 'Private equity practice',
-    number: '410',
-    result: 'off-market introductions',
-    timeframe: 'In 180 days',
+    statement: 'A private equity practice received 410 off-market introductions in 180 days.',
     secondary: '49 LOIs issued · 8 signed',
   },
 ];
@@ -322,28 +306,9 @@ export default function Home() {
                 label: client.company,
                 content: (
                   <article className="client-result-card">
-                    <div className="result-main">
-                      <div className="result-identity">
-                        <p className="result-descriptor">{client.descriptor}</p>
-                        <div className="result-logo-slot">
-                          {client.logo ? (
-                            <img
-                              className={`result-logo result-logo--${client.logo.variant}`}
-                              src={client.logo.src}
-                              alt={`${client.company} logo`}
-                              width={client.logo.width}
-                              height={client.logo.height}
-                              loading="lazy"
-                              decoding="async"
-                            />
-                          ) : null}
-                        </div>
-                        <p className="result-company">{client.company}</p>
-                      </div>
-                      <h3 className="result-primary"><span className="result-number">{client.number}</span>{' '}<span className="result-label">{client.result}</span></h3>
-                      <p className="result-timeframe">{client.timeframe}</p>
-                    </div>
+                    <h3 className="result-primary">{client.statement}</h3>
                     <p className="result-secondary">{client.secondary}</p>
+                    <p className="result-company">{client.company}</p>
                   </article>
                 ),
               }))}
