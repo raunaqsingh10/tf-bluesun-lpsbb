@@ -17,36 +17,6 @@ type ImageAsset = {
 };
 
 const mediaManifest = {
-  proofBridgeSms: {
-    src: '/media/proof-bridge/response-pete-guajardo-sms.png',
-    alt: 'SMS conversation with Pete Guajardo asking what time works today',
-    width: 703,
-    height: 538,
-    channel: 'SMS',
-    layout: 'conversation',
-  },
-  proofBridgeSmsTwo: {
-    src: '/media/proof-bridge/response-david-burpo-sms.png',
-    alt: 'SMS conversation with David Burpo saying he is ready to talk and can be contacted anytime',
-    width: 703,
-    height: 516,
-    channel: 'SMS',
-    layout: 'conversation',
-  },
-  proofBridgeSmsThree: {
-    src: '/media/proof-bridge/response-rodrigo-diaz-sms.png',
-    alt: 'SMS conversation with Rodrigo Diaz showing interest and sharing an email address',
-    width: 693,
-    height: 537,
-    channel: 'SMS',
-    layout: 'conversation',
-  },
-  calendar: {
-    src: '/media/proof-bridge/populated-appointment-calendar.jpg',
-    alt: 'Populated appointment calendar showing booked growth meetings, discovery calls, and onboarding events',
-    width: 1725,
-    height: 549,
-  },
   response01: {
     src: '/media/campaign-proof/response-01-linkedin.jpg',
     alt: 'LinkedIn conversation with Karan Jain proposing a Google Meet and an invite',
@@ -132,7 +102,7 @@ const testimonialMedia = {
 
 const clientResults = [
   {
-    company: 'INFINITE CONSULTING',
+    company: 'Infinite Consulting',
     logo: { src: '/media/client-logos/infinite-consulting.png', width: 742, height: 386, variant: 'infinite' },
     descriptor: 'California-based consulting firm',
     number: '110',
@@ -141,7 +111,7 @@ const clientResults = [
     secondary: '20 clients closed · $40K/month in revenue',
   },
   {
-    company: 'PERIGON CAPITAL',
+    company: 'Perigon Capital',
     logo: { src: '/media/client-logos/perigon-capital.jpeg', width: 400, height: 400, variant: 'perigon' },
     descriptor: 'Boutique investment bank',
     number: '90',
@@ -159,7 +129,7 @@ const clientResults = [
     secondary: '20 clients closed · $40K/month in revenue',
   },
   {
-    company: 'LOPES CAPITAL',
+    company: 'Lopes Capital',
     logo: { src: '/media/client-logos/lopes-capital.png', width: 480, height: 266, variant: 'lopes' },
     descriptor: 'Private equity practice',
     number: '410',
@@ -168,102 +138,6 @@ const clientResults = [
     secondary: '49 LOIs issued · 8 signed',
   },
 ];
-
-function ProofPlaceholder({ compact = false, pattern }: { compact?: boolean; pattern: string[] }) {
-  return (
-    <div
-      className={`proof-placeholder${compact ? ' compact' : ''}`}
-      role="img"
-      aria-label="Proof screenshot placeholder"
-    >
-      <div className="placeholder-lines">
-        {pattern.map((line, index) => (
-          <span className={line} key={`${line}-${index}`} />
-        ))}
-      </div>
-      <div className="reply-bubble" aria-hidden="true" />
-    </div>
-  );
-}
-
-function ProofCard({
-  channel,
-  label,
-  compact = false,
-  showMeta = true,
-  asset,
-  pattern,
-  placement,
-}: {
-  channel: string;
-  label?: string;
-  compact?: boolean;
-  showMeta?: boolean;
-  asset?: ImageAsset;
-  pattern: string[];
-  placement?: string;
-}) {
-  const className = compact
-    ? `mini-proof-card${asset?.layout ? ` proof-card--${asset.layout}` : ''}`
-    : 'proof-card';
-
-  return (
-    <article className={className} data-proof={placement}>
-      {showMeta ? (
-        <div className="proof-meta">
-          <span>{label ?? (compact ? 'Response' : 'Prospect response')}</span>
-          <span>{asset?.channel ?? channel}</span>
-        </div>
-      ) : null}
-      {asset ? (
-        <img
-          className="proof-image"
-          src={asset.src}
-          alt={asset.alt}
-          width={asset.width}
-          height={asset.height}
-          loading="lazy"
-          decoding="async"
-        />
-      ) : (
-        <ProofPlaceholder compact={compact} pattern={pattern} />
-      )}
-    </article>
-  );
-}
-
-function CalendarPlaceholder() {
-  return (
-    <div className="calendar" role="img" aria-label="Populated appointment calendar placeholder">
-      <div className="calendar-head">
-        <span>Populated appointment calendar</span>
-      </div>
-      <div className="calendar-grid">
-        <div className="day">
-          <div className="event e1">Booked call</div>
-          <div className="event e3">Booked call</div>
-        </div>
-        <div className="day">
-          <div className="event e2">Booked call</div>
-          <div className="event e4">Booked call</div>
-        </div>
-        <div className="day">
-          <div className="event e1">Booked call</div>
-          <div className="event e5">Booked call</div>
-          <div className="event e4">Booked call</div>
-        </div>
-        <div className="day">
-          <div className="event e6">Booked call</div>
-          <div className="event e3">Booked call</div>
-        </div>
-        <div className="day">
-          <div className="event e2">Booked call</div>
-          <div className="event e7">Booked call</div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function SwipeGallery({
   id,
@@ -434,46 +308,47 @@ export default function Home() {
 
         <section className="section white no-border">
           <div className="shell">
-            <div className="proof-intro">
-              <h2>Real conversations. Booked directly onto the calendar.</h2>
-              <p>A few examples from outreach campaigns run for clients.</p>
+            <div className="client-results-head">
+              <p className="overline blue">REAL CLIENT RESULTS</p>
+              <h2>Results from B2B businesses we&apos;ve worked with.</h2>
+              <p className="body-copy">Across consulting, AI, investment banking and private equity.</p>
             </div>
 
-            <div className="proof-scroll" aria-label="Three prospect-response screenshots">
-              <ProofCard showMeta={false} channel="SMS" pattern={['short', 'mid', '']} asset={mediaManifest.proofBridgeSms} />
-              <ProofCard showMeta={false} channel="SMS" pattern={['mid', '', 'short']} asset={mediaManifest.proofBridgeSmsTwo} />
-              <ProofCard showMeta={false} channel="SMS" pattern={['', 'short', 'bluebar']} asset={mediaManifest.proofBridgeSmsThree} />
-            </div>
+            <SwipeGallery
+              id="client-results-gallery"
+              label="Client results"
+              variant="results"
+              slides={clientResults.map((client) => ({
+                label: client.company,
+                content: (
+                  <article className="client-result-card">
+                    <div className="result-main">
+                      <div className="result-identity">
+                        <p className="result-descriptor">{client.descriptor}</p>
+                        <div className="result-logo-slot">
+                          {client.logo ? (
+                            <img
+                              className={`result-logo result-logo--${client.logo.variant}`}
+                              src={client.logo.src}
+                              alt={`${client.company} logo`}
+                              width={client.logo.width}
+                              height={client.logo.height}
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          ) : null}
+                        </div>
+                        <p className="result-company">{client.company}</p>
+                      </div>
+                      <h3 className="result-primary"><span className="result-number">{client.number}</span>{' '}<span className="result-label">{client.result}</span></h3>
+                      <p className="result-timeframe">{client.timeframe}</p>
+                    </div>
+                    <p className="result-secondary">{client.secondary}</p>
+                  </article>
+                ),
+              }))}
+            />
 
-            <div className="proof-intro calendar-proof-intro">
-              <p>Appointments booked directly into a client&apos;s calendar.</p>
-            </div>
-
-            {mediaManifest.calendar ? (
-              <img
-                className="calendar-image"
-                src={mediaManifest.calendar.src}
-                alt={mediaManifest.calendar.alt}
-                width={mediaManifest.calendar.width}
-                height={mediaManifest.calendar.height}
-                loading="lazy"
-                decoding="async"
-              />
-            ) : (
-              <CalendarPlaceholder />
-            )}
-
-            <div className="quote-block quote-muted">
-              “I&apos;ve bought leads before from companies, and I&apos;ve had other people do lead generation for me with Facebook ads, and they were terrible leads. <strong>I definitely think we&apos;ve got a goldmine.</strong>”
-            </div>
-
-            <div className="proof-intro">
-              <p>
-                Keith Nickel
-                <br />
-                FOMA AI · California
-              </p>
-            </div>
           </div>
         </section>
 
@@ -560,47 +435,6 @@ export default function Home() {
 
         <section className="section white">
           <div className="shell">
-            <div className="client-results-head">
-              <p className="overline blue">REAL CLIENT RESULTS</p>
-              <h2>What our outbound systems have delivered for clients.</h2>
-              <p className="body-copy">A few examples across consulting, AI and financial services.</p>
-            </div>
-
-            <SwipeGallery
-              id="client-results-gallery"
-              label="Client results"
-              variant="results"
-              slides={clientResults.map((client) => ({
-                label: client.company,
-                content: (
-                  <article className="client-result-card">
-                    <div className="result-main">
-                      <div className="result-identity">
-                        <div className="result-logo-slot">
-                          {client.logo ? (
-                            <img
-                              className={`result-logo result-logo--${client.logo.variant}`}
-                              src={client.logo.src}
-                              alt={`${client.company} logo`}
-                              width={client.logo.width}
-                              height={client.logo.height}
-                              loading="lazy"
-                              decoding="async"
-                            />
-                          ) : null}
-                        </div>
-                        <p className="result-company">{client.company}</p>
-                        <p className="result-descriptor">{client.descriptor}</p>
-                      </div>
-                      <h3 className="result-primary"><span className="result-number">{client.number}</span>{' '}<span className="result-label">{client.result}</span></h3>
-                      <p className="result-timeframe">{client.timeframe}</p>
-                    </div>
-                    <p className="result-secondary">{client.secondary}</p>
-                  </article>
-                ),
-              }))}
-            />
-
             <div className="campaign-proof-head">
               <p className="overline blue">Real Campaign Proof</p>
               <h2>Reach companies showing the right signals, and the conversation changes.</h2>
