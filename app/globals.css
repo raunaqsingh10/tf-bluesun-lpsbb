@@ -313,6 +313,15 @@ summary:focus-visible {
   font-size: 15px;
 }
 
+.calendar-proof-intro {
+  margin-top: 12px;
+}
+
+.calendar-proof-intro + .calendar-image,
+.calendar-proof-intro + .calendar {
+  margin-top: 0;
+}
+
 .proof-scroll,
 .video-strip {
   display: grid;
@@ -837,8 +846,6 @@ summary:focus-visible {
 .qualification-note {
   max-width: 860px;
   margin-bottom: 24px;
-  padding-left: 16px;
-  border-left: 2px solid var(--line);
 }
 
 .proof-cta {

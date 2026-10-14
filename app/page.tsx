@@ -445,6 +445,10 @@ export default function Home() {
               <ProofCard showMeta={false} channel="SMS" pattern={['', 'short', 'bluebar']} asset={mediaManifest.proofBridgeSmsThree} />
             </div>
 
+            <div className="proof-intro calendar-proof-intro">
+              <p>Appointments booked directly into a client&apos;s calendar.</p>
+            </div>
+
             {mediaManifest.calendar ? (
               <img
                 className="calendar-image"
@@ -458,10 +462,6 @@ export default function Home() {
             ) : (
               <CalendarPlaceholder />
             )}
-
-            <div className="proof-intro">
-              <p>Appointments booked directly into a client&apos;s calendar.</p>
-            </div>
 
             <div className="quote-block quote-muted">
               “I&apos;ve bought leads before from companies, and I&apos;ve had other people do lead generation for me with Facebook ads, and they were terrible leads. <strong>I definitely think we&apos;ve got a goldmine.</strong>”
