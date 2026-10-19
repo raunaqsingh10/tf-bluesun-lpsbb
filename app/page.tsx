@@ -103,21 +103,29 @@ const testimonialMedia = {
 const clientResults = [
   {
     company: 'Infinite Consulting',
+    logo: { src: '/media/client-logos/infinite-consulting.png', width: 742, height: 386, backed: true },
+    showCompanyName: false,
     statement: 'A California-based consulting firm received 110 qualified sales calls in 60 days.',
     secondary: '20 clients closed · $40K/month in revenue',
   },
   {
     company: 'Perigon Capital',
+    logo: { src: '/media/client-logos/perigon-capital.jpeg', width: 400, height: 400, backed: false },
+    showCompanyName: true,
     statement: 'A boutique investment bank received 90 off-market introductions in 60 days.',
     secondary: '9 signed mandates · $300K net revenue',
   },
   {
     company: 'FOMA AI',
+    logo: { src: '/media/client-logos/foma-ai.png', width: 200, height: 200, backed: false },
+    showCompanyName: true,
     statement: 'A Beverly Hills-based AI agency received 220 qualified sales calls in 100 days.',
     secondary: '20 clients closed · $40K/month in revenue',
   },
   {
     company: 'Lopes Capital',
+    logo: { src: '/media/client-logos/lopes-capital.png', width: 480, height: 266, backed: true },
+    showCompanyName: false,
     statement: 'A private equity practice received 410 off-market introductions in 180 days.',
     secondary: '49 LOIs issued · 8 signed',
   },
@@ -308,7 +316,20 @@ export default function Home() {
                   <article className="client-result-card">
                     <h3 className="result-primary">{client.statement}</h3>
                     <p className="result-secondary">{client.secondary}</p>
-                    <p className="result-company">{client.company}</p>
+                    <div className="result-attribution">
+                      <div className={`result-logo-frame${client.logo.backed ? ' result-logo-frame--backed' : ''}`}>
+                        <img
+                          className="result-logo"
+                          src={client.logo.src}
+                          alt={`${client.company} logo`}
+                          width={client.logo.width}
+                          height={client.logo.height}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </div>
+                      {client.showCompanyName ? <p className="result-company">{client.company}</p> : null}
+                    </div>
                   </article>
                 ),
               }))}
